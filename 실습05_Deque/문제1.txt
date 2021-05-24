@@ -1,0 +1,231 @@
+// Lab Session for Data Structures
+// Week 5: Queue
+// Deque Implementation
+// Data Science Laboratory at Hanyang University
+
+#include <stdio.h>
+#include <stdlib.h>
+#define LIMIT 10;
+
+typedef int element;
+typedef struct QueueNode {
+    element item;
+    struct QueueNode *prev;
+    struct QueueNode *next;
+} QueueNode;
+typedef struct {
+    QueueNode *front, *rear;
+} QueueType;
+
+
+int size = 0;
+
+int is_empty(QueueType *q) {
+    if(q->front == NULL && q->rear == NULL) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int is_full() {
+    return size == LIMIT;
+}
+
+void add_front(QueueType *dq, element item) {
+    if (is_full()) {
+        printf("QUEUE is full.\n");
+    } else {
+        QueueNode *temp = (QueueNode *)malloc(sizeof(QueueNode));
+        if(temp == NULL)
+            printf("메모리 할당 오류.\n");
+        else {
+            temp->item = item;
+            temp->next = NULL;
+            temp->prev = NULL;
+            if(is_empty(dq)){
+                dq->front = temp;
+                dq->rear = temp;
+            }
+            else {
+                dq->front->prev = temp;
+                temp->next = dq->front;
+                
+                dq->front = temp;
+               
+            }
+            
+            size++;
+            printf("add front %d\n",item);
+            
+        }
+           
+    }
+}
+
+void add_rear(QueueType *dq, element item) {
+    if (is_full()) {
+        printf("큐가 꽉 찼습니다.\n");
+    } else {
+        QueueNode *temp = (QueueNode *)malloc(sizeof(QueueNode));
+        if(temp == NULL)
+            printf("메모리 할당 오류.\n");
+        else {
+            temp->item = item;
+            temp->prev = NULL;
+            temp->next = NULL;
+            if(is_empty(dq)){
+                dq->front = temp;
+                dq->rear = temp;
+            }
+            else {
+                dq->rear->next = temp;
+                temp->prev = dq->rear;
+                dq->rear = temp;
+            }
+            size++;
+            printf("add rear %d\n",item);
+        }
+    }
+}
+
+
+
+int delete_front(QueueType *q) {
+    QueueNode *temp = q -> front;
+    element item;
+    if(is_empty(q)) {
+        printf("큐가 비어있습니다\n");
+        return -1;
+    } else {
+        item = temp -> item;
+        if(size == 1)
+        {
+            q -> front = NULL;
+            q -> rear = NULL;
+            free(temp);
+        }
+        else
+        {
+            q-> front = q -> front -> next;
+            q -> front ->prev = NULL;
+            free(temp);
+        }
+        size--;
+        return item;
+    }
+}
+
+int delete_back(QueueType *q) {
+    QueueNode *temp = q -> rear;
+    element item;
+    
+    if(is_empty(q)) {
+        printf("큐가 비어있습니다.\n");
+        return -1;
+    } else {
+        // Write down your code...
+        item = temp -> item;
+        if(size == 1)
+        {
+            q -> front = NULL;
+            q -> rear = NULL;
+            free(temp);
+        }
+        else
+        {
+            q -> rear = q -> rear ->prev;
+            q -> rear ->next = NULL;
+            free(temp);
+        }
+        size--;
+        return item;
+    }
+    
+}
+
+int get_front(QueueType *q) {
+    return q->front->item;
+}
+
+int get_back(QueueType *q) {
+    return q->rear->item;
+}
+
+void display(QueueType *q) {
+    QueueNode *temp = q->front;
+    if (is_empty(q)) {
+        printf("[ EMPTY QUEUE ]\n");
+    } else {
+        printf("FRONT ==> [  %d  ] ", temp->item);
+        temp = temp->next;
+        while (temp->next != NULL) {
+            printf("[  %d  ] ", temp->item);
+            temp = temp->next;
+        }
+        printf("[  %d  ] <== REAR\n", temp->item);
+        printf("SIZE: %d\n", size);
+        printf("FRONT: %d, REAR: %d\n", get_front(q), get_back(q));
+    }
+}
+
+void display_from_rear(QueueType *q) {
+    QueueNode *temp = q->rear;
+    if (is_empty(q)) {
+        printf("[ EMPTY QUEUE ]\n");
+    } else {
+        printf("REAR ==> [  %d  ] ", temp->item);
+        temp = temp->prev;
+        while (temp->prev != NULL) {
+            printf("[  %d  ] ", temp->item);
+            temp = temp->prev;
+        }
+        printf("[  %d  ] <== FRONT\n", temp->item);
+        printf("SIZE: %d\n", size);
+        printf("FRONT: %d, REAR: %d\n", get_front(q), get_back(q));
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    
+    QueueType *deque = (QueueType *)malloc(sizeof(QueueType));
+    deque->front = NULL;
+    deque->rear = NULL;
+    
+    add_front(deque, 11);
+    add_front(deque, 48);
+    add_front(deque, 42);
+    display(deque);
+    display_from_rear(deque);
+    add_rear(deque, 43);
+    add_rear(deque, 54);
+    add_rear(deque, 68);
+    display(deque);
+    display_from_rear(deque);
+    add_rear(deque, 22);
+    add_rear(deque, 56);
+    add_rear(deque, 32);
+    add_rear(deque, 14);
+    display(deque);
+    display_from_rear(deque);
+    
+    add_rear(deque, 0);
+    
+    printf("delete front %d\n", delete_front(deque));
+    printf("delete front %d\n", delete_front(deque));
+    display(deque);
+    display_from_rear(deque);
+    printf("delete back %d\n", delete_back(deque));
+    printf("delete back %d\n", delete_back(deque));
+    printf("delete back %d\n", delete_back(deque));
+    printf("delete back %d\n", delete_back(deque));
+    printf("delete back %d\n", delete_back(deque));
+    printf("delete back %d\n", delete_back(deque));
+    printf("delete back %d\n", delete_back(deque));
+    printf("delete back %d\n", delete_back(deque));
+    printf("delete back %d\n", delete_back(deque));
+    display(deque);
+    printf("delete back %d\n", delete_back(deque));
+    display_from_rear(deque);
+    return 0;
+}

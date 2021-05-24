@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+void print_array(int arr[][5]) {
+ for(int i=0; i<5; i++)
+ {
+     for(int j=0; j<5; j++)
+     {
+         printf("%3d \t", arr[i][j]);
+     }
+     printf("\n");
+ }
+    
+}
+void transpose(int arr[][5], int transposed_arr[][5]) {
+ for(int i=0; i<5; i++)
+ {
+     for(int j=0; j<5; j++)
+     {
+         transposed_arr[i][j] = arr[j][i];
+     }
+ }
+}
+int main() {
+ int arr[5][5] = {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15},{16,17,18,19,20},
+{21,22,23,24,25}};
+ int transposed_arr[5][5] = {0,};
+ printf("=========기본 출력=========\n");
+ print_array(arr);
+ transpose(arr, transposed_arr);
+ printf("\n");
+ printf("=========변경 출력=========\n");
+ print_array(transposed_arr);
+}

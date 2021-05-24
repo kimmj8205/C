@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+typedef struct {
+    int x;
+    int y;
+} Point;
+
+int main() {
+    int i, j;
+    
+    Point p[6];
+    
+    srand(time(NULL));
+    
+    for(i=0;i<6;i++){
+        int r1 = rand()%10;
+        int r2 = rand()%10;
+        p[i].x = r1;
+        p[i].y = r2;
+    }
+    
+    printf("Initial Array: ");
+    for(i=0;i<6;i++){
+        printf("[%d %d] ",p[i].x, p[i].y);
+    }
+    printf("\n");
+    for(i=0;i<6;i++){
+        for(j=0;j<6-i-1;j++){
+            if(p[j].x>p[j+1].x){
+                Point a = p[j];
+                p[j] = p[j+1];
+                p[j+1] = a;
+            }
+            else if (p[j].x == p[j+1].x){ 
+                if(p[j].y>p[j+1].y){
+                Point a = p[j];
+                p[j] = p[j+1];
+                p[j+1] = a;
+                }
+            }
+            
+        }
+    }
+            
+                
+                    
+    printf("Sorted Array: ");
+    for(int i = 0; i<6;i++) {
+        printf("[%d %d] ",p[i].x, p[i].y);
+    }
+    printf("\n");
+}

@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+    int key;
+} element;
+
+typedef struct{
+    element heap[100];
+    int heap_size;
+} HeapType;
+
+void insert(HeapType *h, int k)
+{
+    int i;
+    
+    i = ++(h->heap_size);
+    while((i != 1) && (k > h->heap[i/2].key)){
+        h->heap[i] = h->heap[i/2];
+        i /= 2;
+    }
+    h->heap[i].key = k;
+    printf("insert %d\n",k);
+    return ;
+}
+
+int delete(HeapType *h)
+{
+    int parent, child, item, temp;
+    item = h->heap[1].key;
+    temp = h->heap[(h->heap_size)--].key;
+    parent = 1;
+    child = 2;
+    while( child <= h->heap_size ){
+        if( ( child > h->heap_size ) &&
+        (h->heap[child].key) < h->heap[child+1].key)
+        child++;
+        if( temp >= h->heap[child].key ) break;
+        h->heap[parent] = h->heap[child];
+        parent = child;
+        child *= 2;
+    }
+    h->heap[parent].key = temp;
+    printf("delete %d\n", item);
+    return item;
+}
+
+void printheap(HeapType *h) {
+    printf("start : ");
+    for(int i = 1; i<=h->heap_size; i++){
+        printf("%d ",h->heap[i].key);
+    }
+    printf("\n");
+}
+
+int main(void)
+{
+    HeapType h;
+    h.heap_size = 0;
+    insert(&h,1);
+    insert(&h,2);
+    insert(&h,3);
+    insert(&h,4);
+    insert(&h,5);
+    insert(&h,6);
+    insert(&h,7);
+    insert(&h,8);
+    insert(&h,9);
+    printheap(&h);
+    delete(&h);
+    printheap(&h);
+}

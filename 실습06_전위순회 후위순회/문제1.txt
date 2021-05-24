@@ -1,0 +1,82 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct TreeNode {
+ 	char data;
+    struct TreeNode *left, *right;
+} TreeNode;
+
+void preorder(TreeNode *node) {
+ 	if (node!=NULL) {
+        char d = node->data;
+        printf("%c ", d);
+        preorder(node->left);
+        preorder(node->right);
+    }
+}
+void postorder(TreeNode *node) {
+ 	if(node!=NULL)
+    {
+        char d = node->data;
+        postorder(node->left);
+        postorder(node->right);
+        printf("%c ",d);
+    }
+        
+}
+int main() {
+    TreeNode *n1, *n2, *n3, *n4, *n5, *n6, *n7, *n8, *n9;
+    
+    n1= (TreeNode *)malloc(sizeof(TreeNode));
+    n2= (TreeNode *)malloc(sizeof(TreeNode));
+    n3= (TreeNode *)malloc(sizeof(TreeNode));
+    n4= (TreeNode *)malloc(sizeof(TreeNode));
+    n5= (TreeNode *)malloc(sizeof(TreeNode));
+    n6= (TreeNode *)malloc(sizeof(TreeNode));
+    n7= (TreeNode *)malloc(sizeof(TreeNode));
+    n8= (TreeNode *)malloc(sizeof(TreeNode));
+    n9= (TreeNode *)malloc(sizeof(TreeNode));
+    
+    n1->data = 'F';
+    n1->left = n2;
+    n1->right = n3;
+    
+    n2->data = 'B';
+    n2->left = n4;
+    n2->right = n5;
+    
+    n3->data = 'G';
+    n3->left = NULL;
+    n3->right = n6;
+    
+    n4->data = 'A';
+    n4->left = NULL;
+    n4->right = NULL;
+    
+    n5->data = 'D';
+    n5->left = n7;
+    n5->right = n8;
+    
+    n6->data = 'I';
+    n6->left = n9;
+    n6->right = NULL;
+    
+    n7->data = 'C';
+    n7->left = NULL;
+    n7->right = NULL;
+    
+    n8->data = 'E';
+    n8->left = NULL;
+    n8->right = NULL;
+    
+    n9->data = 'H';
+    n9->left = NULL;
+    n9->right = NULL;
+    
+	printf("Preorder: ");
+ 	preorder(n1);
+ 	printf("\n");
+ 	printf("Postorder: ");
+ 	postorder(n1);
+ 	printf("\n");
+ 	return 0;
+}

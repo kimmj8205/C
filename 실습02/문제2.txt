@@ -1,0 +1,16 @@
+#include<stdio.h>
+void recur_gugu(int stage, int n);
+int main() {
+ 	int stage = 0;
+    scanf("%d", &stage);
+    recur_gugu(stage,1);
+    return 0;
+}
+void recur_gugu(int stage, int n) {
+	if(n==10)
+        return ;
+    else{
+        printf("%d * %d = %d\n",stage,n,stage*n);
+        return recur_gugu(stage,n+1);
+    }
+} 
